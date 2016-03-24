@@ -6,8 +6,8 @@
 //  Copyright © 2016 Sumit Anantwar. All rights reserved.
 //
 
-#import "Product.h"
+#import "ProductItem.h"
 
-@implementation Product
+@implementation ProductItem
 
 @end

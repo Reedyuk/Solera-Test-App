@@ -16,6 +16,10 @@
 		F09AD2321CA428800070385C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F09AD2301CA428800070385C /* LaunchScreen.storyboard */; };
 		F09AD23D1CA428800070385C /* Solera_Test_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F09AD23C1CA428800070385C /* Solera_Test_AppTests.m */; };
 		F09AD2481CA428800070385C /* Solera_Test_AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F09AD2471CA428800070385C /* Solera_Test_AppUITests.m */; };
+		F09AD2681CA446A20070385C /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = F09AD2621CA446A20070385C /* Common.m */; };
+		F09AD2691CA446A20070385C /* ShoppingCart.m in Sources */ = {isa = PBXBuildFile; fileRef = F09AD2651CA446A20070385C /* ShoppingCart.m */; };
+		F09AD26A1CA446A20070385C /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F09AD2671CA446A20070385C /* ProductItem.m */; };
+		F09AD26D1CA4509C0070385C /* DataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = F09AD26C1CA4509C0070385C /* DataFetcher.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +58,14 @@
 		F09AD2431CA428800070385C /* Solera-Test-AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Solera-Test-AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F09AD2471CA428800070385C /* Solera_Test_AppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Solera_Test_AppUITests.m; sourceTree = "<group>"; };
 		F09AD2491CA428800070385C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F09AD2611CA446A20070385C /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		F09AD2621CA446A20070385C /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
+		F09AD2641CA446A20070385C /* ShoppingCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCart.h; sourceTree = "<group>"; };
+		F09AD2651CA446A20070385C /* ShoppingCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCart.m; sourceTree = "<group>"; };
+		F09AD2661CA446A20070385C /* ProductItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItem.h; sourceTree = "<group>"; };
+		F09AD2671CA446A20070385C /* ProductItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItem.m; sourceTree = "<group>"; };
+		F09AD26B1CA4509C0070385C /* DataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFetcher.h; sourceTree = "<group>"; };
+		F09AD26C1CA4509C0070385C /* DataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataFetcher.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +116,8 @@
 		F09AD21E1CA4287F0070385C /* Solera-Test-App */ = {
 			isa = PBXGroup;
 			children = (
+				F09AD2601CA446A20070385C /* Helpers */,
+				F09AD2631CA446A20070385C /* Model */,
 				F09AD2221CA4287F0070385C /* AppDelegate.h */,
 				F09AD2231CA4287F0070385C /* AppDelegate.m */,
 				F09AD2251CA4287F0070385C /* MasterViewController.h */,
@@ -143,6 +157,28 @@
 				F09AD2491CA428800070385C /* Info.plist */,
 			);
 			path = "Solera-Test-AppUITests";
+			sourceTree = "<group>";
+		};
+		F09AD2601CA446A20070385C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F09AD2611CA446A20070385C /* Common.h */,
+				F09AD2621CA446A20070385C /* Common.m */,
+				F09AD26B1CA4509C0070385C /* DataFetcher.h */,
+				F09AD26C1CA4509C0070385C /* DataFetcher.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		F09AD2631CA446A20070385C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F09AD2641CA446A20070385C /* ShoppingCart.h */,
+				F09AD2651CA446A20070385C /* ShoppingCart.m */,
+				F09AD2661CA446A20070385C /* ProductItem.h */,
+				F09AD2671CA446A20070385C /* ProductItem.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,8 +311,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F09AD26A1CA446A20070385C /* ProductItem.m in Sources */,
 				F09AD2241CA4287F0070385C /* AppDelegate.m in Sources */,
+				F09AD2691CA446A20070385C /* ShoppingCart.m in Sources */,
+				F09AD26D1CA4509C0070385C /* DataFetcher.m in Sources */,
 				F09AD2271CA4287F0070385C /* MasterViewController.m in Sources */,
+				F09AD2681CA446A20070385C /* Common.m in Sources */,
 				F09AD2211CA4287F0070385C /* main.m in Sources */,
 				F09AD22A1CA4287F0070385C /* DetailViewController.m in Sources */,
 			);
@@ -504,6 +544,7 @@
 				F09AD24E1CA428800070385C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F09AD24F1CA428800070385C /* Build configuration list for PBXNativeTarget "Solera-Test-AppTests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +553,7 @@
 				F09AD2511CA428800070385C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F09AD2521CA428800070385C /* Build configuration list for PBXNativeTarget "Solera-Test-AppUITests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +562,7 @@
 				F09AD2541CA428800070385C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

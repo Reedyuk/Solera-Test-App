@@ -6,11 +6,31 @@
 //  Copyright © 2016 Sumit Anantwar. All rights reserved.
 //
 
-#import "Cart.h"
+#import "ShoppingCart.h"
 
-@implementation Cart
+@interface ShoppingCart()
+
+@property (nonatomic, strong) NSMutableArray *products;
+
+@end
+
+@implementation ShoppingCart
 
 
+- (NSMutableArray *)products
+{
+    if (!_products) _products = [[NSMutableArray alloc] init];
+    return _products;
+}
 
+- (void)addProduct: (ProductItem *)product
+{
+    [self.products addObject:product];
+}
+
+- (ProductItem *)getProductAtIndex:(NSInteger)index
+{
+    return self.products[index];
+}
 
 @end

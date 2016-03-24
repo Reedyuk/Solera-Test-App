@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface Product : NSObject
+@interface ProductItem : NSObject
 
 @property (nonatomic, strong) NSString *productTitle;
 @property (nonatomic, strong) UIImage *productImage;
 @property (nonatomic) NSInteger availableQty;
+@property (nonatomic) float price;
 
 
 @end

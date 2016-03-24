@@ -10,4 +10,6 @@
 
 @interface DataFetcher : NSObject
 
+- (NSArray *)getProductList;
+
 @end

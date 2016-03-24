@@ -7,12 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Product.h"
+#import "ProductItem.h"
 
-@interface Cart : NSObject
+@interface ShoppingCart : NSObject
 
-@property (nonatomic, strong) Product *product;
+- (void)addProduct: (ProductItem *)product;
 
-
-- (void) addProduct
 @end
