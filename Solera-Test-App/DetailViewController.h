@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ProductItem.h"
 
 @interface DetailViewController : UITableViewController
 
-@property (strong, nonatomic) id detailItem;
+@property (nonatomic, strong) ProductItem *productItem;
+@property (nonatomic, strong) MasterViewController *masterViewController;
 
 @end
 
