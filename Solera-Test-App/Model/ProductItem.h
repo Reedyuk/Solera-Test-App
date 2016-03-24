@@ -11,10 +11,11 @@
 
 @interface ProductItem : NSObject
 
-@property (nonatomic, strong) NSString *productTitle;
-@property (nonatomic, strong) UIImage *productImage;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic) NSInteger availableQty;
-@property (nonatomic) float price;
+@property (nonatomic) NSNumber *price;
+@property (nonatomic, strong) NSString *description;
 
 
 @end

@@ -46,7 +46,7 @@
     if (self.productItem) {
         
         [self.productIV sd_setImageWithURL:[NSURL URLWithString:@""]];
-        self.productTitleLbl.text = self.productItem.productTitle;
+        self.productTitleLbl.text = self.productItem.title;
         self.productDescriptionTV.text = self.productItem.description;
         self.qtyCountLbl.text = @"0"; // Get from Cart
     }

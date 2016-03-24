@@ -14,8 +14,50 @@
 
 
 #import "DataFetcher.h"
+#import "ProductItem.h"
+#import "AFNetworking.h"
+#import "Reachability.h"
+#import "Constants.h"
+
+NSString *const P_TITLE     = @"title";
+NSString *const P_IMAGE_URL = @"image";
+NSString *const P_STOCK     = @"stock";
+NSString *const P_PRICE     = @"price";
+
 
 @implementation DataFetcher
+
+- (void)fetchCurrencyRates
+{
+    if (![self internetAvailable:K_URL_REACHABILITY])
+    {
+        [self alertNetworkError];
+    }
+    else
+    {
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager GET:K_URL_CURRENCY
+          parameters:nil
+            progress:nil
+             success:^(NSURLSessionTask *task, id responseObject){
+             
+//                 NDLog(@"JSON : %@", responseObject);
+                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                 [defaults setObject:responseObject[@"quotes"] forKey:K_USR_CURRENCY_RATES];
+                 [defaults synchronize];
+                 
+                 [self dataFetchComplete];
+             }
+             failure:^(NSURLSessionTask *task, NSError *error){
+                 
+                 NDLog(@"Error : %@", error);
+                 
+                 [self alertSyncError];
+             }];
+    }
+    
+    
+}
 
 //In real-life scenario this method will implement async data fetching
 - (NSArray *)fetchProducts
@@ -38,6 +80,7 @@
                                    @"image" : @"",
                                    @"stock" : @5,
                                    @"price" : @1.30,
+                                   @"desc"  : @""
                                 },
                                @{
                                    @"title" : @"Beans",
@@ -53,7 +96,54 @@
 
 - (NSArray *)getProductList
 {
-    return [self fetchProducts];
+    NSMutableArray *productsList = [[NSMutableArray alloc] initWithCapacity:5];
+    
+    NSArray *products = [self fetchProducts];
+    
+    for (NSDictionary *product in products)
+    {
+        ProductItem *productItem    = [[ProductItem alloc] init];
+        productItem.title           = product[P_TITLE];
+        productItem.imageURL        = product[P_IMAGE_URL];
+        productItem.availableQty    = [product[P_STOCK] integerValue];
+        productItem.price           = product[P_PRICE];
+        
+        [productsList addObject:productItem];
+        
+    }
+    
+    return productsList;
+}
+
+//Methods to Post notifications for the Status of the Async Processes
+- (void)dataFetchComplete
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:K_NOTIF_DATA_FETCH_COMPLETE object:nil];
+}
+
+- (void)alertNetworkError
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:K_NOTIF_NETWORK_ERROR object:nil];
+    
+}
+
+- (void)alertSyncError
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:K_NOTIF_SYNC_ERROR object:nil];
+    
+}
+
+#pragma mark - Reachability Checker
+
+-(BOOL)internetAvailable:(NSString *)domainName
+{
+    Reachability *r = [Reachability reachabilityWithHostName:domainName];
+    NetworkStatus internetStatus = [r currentReachabilityStatus];
+    if(internetStatus == NotReachable)
+    {
+        return NO;
+    }
+    return YES;
 }
 
 

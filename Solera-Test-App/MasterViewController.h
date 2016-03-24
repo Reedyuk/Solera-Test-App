@@ -12,6 +12,10 @@
 @class DetailViewController;
 
 @interface MasterViewController : UITableViewController
+<
+UIPopoverPresentationControllerDelegate,
+UIAlertViewDelegate
+>
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
