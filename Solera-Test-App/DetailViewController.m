@@ -7,15 +7,16 @@
 //
 
 #import "DetailViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *productIV;
 @property (weak, nonatomic) IBOutlet UILabel *productTitleLbl;
 @property (weak, nonatomic) IBOutlet UILabel *qtyCountLbl;
-@property (weak, nonatomic) IBOutlet UIButton *increaseQtyBtn;
-@property (weak, nonatomic) IBOutlet UIButton *decreaseQtyBtn;
-@property (weak, nonatomic) IBOutlet UIButton *addToCartBtn;
 @property (weak, nonatomic) IBOutlet UITextView *productDescriptionTV;
+
+@property (nonatomic) NSUInteger qtyInCart; //Quantity cannot be Negative
 
 
 @end
@@ -24,27 +25,43 @@
 
 #pragma mark - Managing the detail item
 
-- (void)setDetailItem:(id)newDetailItem {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
+- (void)setProductItem:(id)newProductItem {
+    if (_productItem != newProductItem) {
+        _productItem = newProductItem;
             
         // Update the view.
-        [self configureView];
+        [self updateView];
     }
 }
 
-- (void)configureView
+- (void)setQtyInCart:(NSUInteger)qtyInCart
 {
-    // Update the user interface for the detail item.
-    if (self.detailItem) {
-//        self.detailDescriptionLabel.text = [self.detailItem description];
+    _qtyInCart = qtyInCart;
+    
+    self.qtyCountLbl.text = [@(qtyInCart) stringValue];
+}
+
+- (void)updateView
+{
+    if (self.productItem) {
+        
+        [self.productIV sd_setImageWithURL:[NSURL URLWithString:@""]];
+        self.productTitleLbl.text = self.productItem.productTitle;
+        self.productDescriptionTV.text = self.productItem.description;
+        self.qtyCountLbl.text = @"0"; // Get from Cart
     }
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    [self configureView];
+    
+    [self updateView];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,5 +88,26 @@
     
     return height;
 }
+
+
+- (IBAction)incrementProductQtyInCart:(UIButton *)sender
+{
+    self.qtyInCart++;
+    
+}
+
+- (IBAction)decrementProductQtyInCart:(UIButton *)sender
+{
+    self.qtyInCart--;
+    
+}
+
+
+- (IBAction)addProductToCart:(UIButton *)sender
+{
+    
+    
+}
+
 
 @end

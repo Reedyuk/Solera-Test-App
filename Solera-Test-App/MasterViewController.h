@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ProductItem.h"
 
 @class DetailViewController;
 
 @interface MasterViewController : UITableViewController
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
+
+- (void)addProductToCart:(ProductItem *)product;
 
 
 @end

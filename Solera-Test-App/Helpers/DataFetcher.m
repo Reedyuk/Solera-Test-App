@@ -17,12 +17,43 @@
 
 @implementation DataFetcher
 
+//In real-life scenario this method will implement async data fetching
+- (NSArray *)fetchProducts
+{
+    NSArray *productsArray = @[
+                               @{
+                                   @"title" : @"Peas",
+                                   @"image" : @"",
+                                   @"stock" : @7,
+                                   @"price" : @0.95,
+                                },
+                               @{
+                                   @"title" : @"Eggs",
+                                   @"image" : @"",
+                                   @"stock" : @8,
+                                   @"price" : @2.10,
+                                },
+                               @{
+                                   @"title" : @"Milk",
+                                   @"image" : @"",
+                                   @"stock" : @5,
+                                   @"price" : @1.30,
+                                },
+                               @{
+                                   @"title" : @"Beans",
+                                   @"image" : @"",
+                                   @"stock" : @8,
+                                   @"price" : @0.73,
+                                }
+                               ];
+    
+    
+    return productsArray;
+}
+
 - (NSArray *)getProductList
 {
-    
-    
-    
-    return nil;
+    return [self fetchProducts];
 }
 
 

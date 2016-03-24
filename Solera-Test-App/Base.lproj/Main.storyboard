@@ -50,68 +50,82 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Qty : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CcP-jI-wlJ" userLabel="Qty Title">
-                                                    <rect key="frame" x="146" y="58" width="46" height="23"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                    <rect key="frame" x="146" y="45" width="35" height="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABO-ff-UhU" userLabel="Qty Value Label">
-                                                    <rect key="frame" x="197" y="58" width="55" height="23"/>
+                                                    <rect key="frame" x="186" y="45" width="55" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="55" id="2dn-v7-dX1"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVU-W8-04t" userLabel="Increase Qty Button">
-                                                    <rect key="frame" x="262" y="55" width="30" height="30"/>
-                                                    <color key="backgroundColor" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="gVU-W8-04t" secondAttribute="height" multiplier="1:1" id="a0r-k8-IWm"/>
-                                                        <constraint firstAttribute="width" constant="30" id="lhb-Fc-JPo"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
-                                                    <state key="normal" title="+">
-                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </state>
-                                                </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Exh-EV-pSr" userLabel="Decrease Qty Button">
-                                                    <rect key="frame" x="297" y="55" width="30" height="30"/>
+                                                    <rect key="frame" x="281" y="41" width="25" height="25"/>
                                                     <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="7cC-7A-YvV"/>
                                                         <constraint firstAttribute="width" secondItem="Exh-EV-pSr" secondAttribute="height" multiplier="1:1" id="ieE-Z2-blD"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
                                                     <state key="normal" title="-">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="decrementProductQtyInCart:" destination="Tqd-wW-hYB" eventType="touchUpInside" id="rTD-ZL-4fD"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pdm-7H-ku3" userLabel="Add to Cart Button">
-                                                    <rect key="frame" x="148" y="105" width="179" height="33"/>
+                                                    <rect key="frame" x="148" y="108" width="158" height="30"/>
                                                     <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="zmG-DZ-QNC"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <state key="normal" title="Add to Cart">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="addProductToCart:" destination="Tqd-wW-hYB" eventType="touchUpInside" id="SE5-aE-IMJ"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBk-PM-PL1" userLabel="Product Title Label">
-                                                    <rect key="frame" x="148" y="18" width="434" height="33"/>
+                                                    <rect key="frame" x="148" y="18" width="434" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="IYu-Zp-9T4"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVU-W8-04t" userLabel="Increase Qty Button">
+                                                    <rect key="frame" x="251" y="41" width="25" height="25"/>
+                                                    <color key="backgroundColor" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="7y1-MU-XLs"/>
+                                                        <constraint firstAttribute="width" secondItem="gVU-W8-04t" secondAttribute="height" multiplier="1:1" id="a0r-k8-IWm"/>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="30" id="lhb-Fc-JPo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
+                                                    <state key="normal" title="+">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="incrementProductQtyInCart:" destination="Tqd-wW-hYB" eventType="touchUpInside" id="evO-zT-jXN"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="gVU-W8-04t" firstAttribute="leading" secondItem="ABO-ff-UhU" secondAttribute="trailing" constant="10" id="00X-JE-tS5"/>
                                                 <constraint firstItem="ABO-ff-UhU" firstAttribute="leading" secondItem="CcP-jI-wlJ" secondAttribute="trailing" constant="5" id="46G-jC-7yz"/>
                                                 <constraint firstItem="Exh-EV-pSr" firstAttribute="leading" secondItem="gVU-W8-04t" secondAttribute="trailing" constant="5" id="6tf-fQ-sR7"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="oBk-PM-PL1" secondAttribute="trailing" constant="10" id="7aK-l6-1si"/>
+                                                <constraint firstItem="Exh-EV-pSr" firstAttribute="height" secondItem="gVU-W8-04t" secondAttribute="height" id="Akc-Xm-7id"/>
                                                 <constraint firstItem="Exh-EV-pSr" firstAttribute="trailing" secondItem="pdm-7H-ku3" secondAttribute="trailing" id="Aq0-za-wQt"/>
+                                                <constraint firstItem="Exh-EV-pSr" firstAttribute="width" secondItem="gVU-W8-04t" secondAttribute="width" id="Ckh-ks-o5M"/>
                                                 <constraint firstItem="oBk-PM-PL1" firstAttribute="leading" secondItem="cQM-lr-LzF" secondAttribute="trailing" constant="10" id="SbD-GZ-3ya"/>
                                                 <constraint firstItem="Exh-EV-pSr" firstAttribute="width" secondItem="Exh-EV-pSr" secondAttribute="height" multiplier="1:1" id="Wgr-CG-sVo"/>
                                                 <constraint firstItem="gVU-W8-04t" firstAttribute="centerY" secondItem="CcP-jI-wlJ" secondAttribute="centerY" id="YxK-Ly-NWx"/>
@@ -139,10 +153,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="147"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvk-eQ-JqR" userLabel="Product Description Text View">
-                                                    <rect key="frame" x="8" y="18" width="584" height="111"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvk-eQ-JqR" userLabel="Product Description Text View">
+                                                    <rect key="frame" x="8" y="18" width="584" height="217"/>
                                                     <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.\nLorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.\nLorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -165,9 +179,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="2Es-Sk-aNJ"/>
                     <connections>
-                        <outlet property="addToCartBtn" destination="pdm-7H-ku3" id="bLX-Ye-NZp"/>
-                        <outlet property="decreaseQtyBtn" destination="Exh-EV-pSr" id="X5B-lr-yya"/>
-                        <outlet property="increaseQtyBtn" destination="gVU-W8-04t" id="ilW-Ut-Quv"/>
                         <outlet property="productDescriptionTV" destination="lvk-eQ-JqR" id="69R-pZ-LCc"/>
                         <outlet property="productIV" destination="cQM-lr-LzF" id="vhs-Gn-CrS"/>
                         <outlet property="productTitleLbl" destination="oBk-PM-PL1" id="fLm-Zn-VWZ"/>
