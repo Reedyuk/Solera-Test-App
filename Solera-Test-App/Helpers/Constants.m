@@ -20,6 +20,7 @@ NSString *const K_URL_CURRENCY = @"http://www.apilayer.net/api/live?access_key=e
 NSString *const K_USR_CURRENCY_RATES = @"CurrencyRatesDictionary";
 NSString *const K_USR_SELECTED_CURRENCY = @"SelectedCurrency";
 
+//Notifications
 NSString *const K_NOTIF_DATA_FETCH_COMPLETE = @"DataFetchComplete";
 NSString *const K_NOTIF_NETWORK_ERROR = @"NetworkError";
 NSString *const K_NOTIF_SYNC_ERROR = @"SyncError";

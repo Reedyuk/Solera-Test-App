@@ -32,6 +32,31 @@
 
 @implementation MasterViewController
 
+#pragma mark - Getters / Setters
+
+//Overriding Getter
+- (ShoppingCart *)cart
+{
+    if (!_cart) _cart = [[ShoppingCart alloc] init];
+    
+    return _cart;
+}
+
+//Overriding setter for self.selectedCurrency
+-(void)setSelectedCurrency:(NSString *)selectedCurrency
+{
+    _selectedCurrency = selectedCurrency;
+    
+    //Curency Conversion Identifier is in format USDXXX
+    //So we will remove the preceeding USD
+    self.currencyString = ([selectedCurrency isEqualToString:@"USDUSD"]) ? @"USD" : [selectedCurrency stringByReplacingOccurrencesOfString:@"USD" withString:@""];
+    
+    [self.currencyButton setTitle:self.currencyString forState:UIControlStateNormal];
+}
+
+
+#pragma mark - View Lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -47,7 +72,7 @@
     self.dbLoadIndicator.hidden = YES;
     [self.navigationController.view addSubview:self.dbLoadIndicator];
     
-    //Register Notification for catching the status of the Async Processes
+    //Register Notification for observing the status of the Async Operations
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadTableView)
                                                  name:K_NOTIF_DATA_FETCH_COMPLETE
@@ -70,12 +95,15 @@
 
     [super viewWillAppear:animated];
     
+    
+    //Start Fetching the Data
     [self startActivityIndicator];
     
     DataFetcher *fetcher = [[DataFetcher alloc] init];
     self.productsList = fetcher.getProductList;
     self.productIdArray = [self.productsList allKeys];
     
+    //Fetch the currency Rates
     [fetcher fetchCurrencyRates];
     
 }
@@ -88,28 +116,13 @@
 
 #pragma mark - Action Methods
 
+//Update the quantity of Products in the Cart
 - (void)updateCartQuantity:(NSInteger)qty forProductId:(NSString *)productId
 {
     [self.cart updateQuantity:qty forProductId:productId];
 }
 
-- (ShoppingCart *)cart
-{
-    if (!_cart) _cart = [[ShoppingCart alloc] init];
-    
-    return _cart;
-}
-
-//Overriding setter for self.selectedCurrency
--(void)setSelectedCurrency:(NSString *)selectedCurrency
-{
-    _selectedCurrency = selectedCurrency;
-    
-    self.currencyString = ([selectedCurrency isEqualToString:@"USDUSD"]) ? @"USD" : [selectedCurrency stringByReplacingOccurrencesOfString:@"USD" withString:@""];
-    
-    [self.currencyButton setTitle:self.currencyString forState:UIControlStateNormal];
-}
-
+//Reload the TableView when Data is changed
 - (void)reloadTableView
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -122,6 +135,7 @@
     
     [self stopActivityIndicator];
 }
+
 
 #pragma mark - Segues
 
@@ -197,10 +211,6 @@
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return NO;
-}
 
 
 #pragma mark - Popover Delegates
@@ -212,12 +222,15 @@
 
 - (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController
 {
+    //Reload the TableView when Currency Changed
     [self reloadTableView];
 }
 
 
 
 #pragma mark - Activity Indicator Methods
+//Activity Indicator while Async Fetching
+
 - (void)startActivityIndicator
 {
     self.view.userInteractionEnabled = NO;
@@ -239,6 +252,7 @@
 
 
 #pragma mark - AlertView
+//Shows Alerts during Async Operations
 
 - (void)networkError
 {
