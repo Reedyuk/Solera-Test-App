@@ -1,27 +1,27 @@
 //
-//  CurrencyTableViewController.m
+//  ShoppingCartViewController.m
 //  Solera-Test-App
 //
-//  Created by Sumit Anantwar on 3/24/16.
+//  Created by Sumit Anantwar on 3/25/16.
 //  Copyright © 2016 Sumit Anantwar. All rights reserved.
 //
 
-#import "CurrencyTableViewController.h"
-#import "Constants.h"
+#import "ShoppingCartViewController.h"
+#import "ProductItem.h"
 
-@interface CurrencyTableViewController ()
+@interface ShoppingCartViewController ()
 
-@property (nonatomic, strong) NSArray *currencyArray;
-
+@property (nonatomic, strong) NSArray *productsInCart;
 
 @end
 
-@implementation CurrencyTableViewController
+@implementation ShoppingCartViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.currencyArray = [[[NSUserDefaults standardUserDefaults] objectForKey:K_USR_CURRENCY_RATES] allKeys];;
+    self.productsInCart = [self.cart getProductIds];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,36 +38,25 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger rowCount = [self.currencyArray count];
-    return rowCount;
+    return [self.productsInCart count];
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CurrencyCell" forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CartCell" forIndexPath:indexPath];
     
-    NSString *currencyId = self.currencyArray[indexPath.row];
+    ProductItem *product = self.productsList[self.productsInCart[indexPath.row]];
     
-    currencyId = ([currencyId isEqualToString:@"USDUSD"]) ? @"USD" : [currencyId stringByReplacingOccurrencesOfString:@"USD" withString:@""];
+    cell.textLabel.text = product.title;
     
-//    currencyId =  [currencyId stringByReplacingOccurrencesOfString:@"USD" withString:@""];
+    NSInteger totaQty = [self.cart getQuantityForProductId:product.identfier];
+    float totalPrice = product.price *totaQty *self.currencyRate;
     
-    cell.textLabel.text = currencyId;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Qty : %d   Price : %.02f %@", (int)totaQty, totalPrice, self.currencyString];
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *selectedCurrency = self.currencyArray[indexPath.row];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:selectedCurrency forKey:K_USR_SELECTED_CURRENCY];
-    [defaults synchronize];
-    
-    self.masterVC.selectedCurrency = selectedCurrency;
-}
 
 /*
 // Override to support conditional editing of the table view.
@@ -103,7 +92,7 @@
 }
 */
 
-
+/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -111,6 +100,6 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-
+*/
 
 @end

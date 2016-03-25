@@ -19,10 +19,12 @@
 #import "Reachability.h"
 #import "Constants.h"
 
+NSString *const P_ID        = @"id";
 NSString *const P_TITLE     = @"title";
 NSString *const P_IMAGE_URL = @"image";
 NSString *const P_STOCK     = @"stock";
 NSString *const P_PRICE     = @"price";
+NSString *const P_DESC      = @"desc";
 
 
 @implementation DataFetcher
@@ -65,29 +67,36 @@ NSString *const P_PRICE     = @"price";
 {
     NSArray *productsArray = @[
                                @{
+                                   @"id"    : @"1",
                                    @"title" : @"Peas",
                                    @"image" : @"",
                                    @"stock" : @7,
                                    @"price" : @0.95,
+                                   @"desc"  : @"Fresh frozen Green Peas"
                                 },
                                @{
+                                   @"id"    : @"2",
                                    @"title" : @"Eggs",
                                    @"image" : @"",
                                    @"stock" : @8,
                                    @"price" : @2.10,
+                                   @"desc"  : @"Fresh Eggs from farm fed Chicken"
                                 },
                                @{
+                                   @"id"    : @"3",
                                    @"title" : @"Milk",
                                    @"image" : @"",
                                    @"stock" : @5,
                                    @"price" : @1.30,
-                                   @"desc"  : @""
+                                   @"desc"  : @"Fresh Milk from Grass Fed Cows"
                                 },
                                @{
+                                   @"id"    : @"4",
                                    @"title" : @"Beans",
                                    @"image" : @"",
                                    @"stock" : @8,
                                    @"price" : @0.73,
+                                   @"desc"  : @"100% Organic White Beans"
                                 }
                                ];
     
@@ -95,21 +104,23 @@ NSString *const P_PRICE     = @"price";
     return productsArray;
 }
 
-- (NSArray *)getProductList
+- (NSDictionary *)getProductList
 {
-    NSMutableArray *productsList = [[NSMutableArray alloc] initWithCapacity:5];
+    NSMutableDictionary *productsList = [[NSMutableDictionary alloc] initWithCapacity:5];
     
     NSArray *products = [self fetchProducts];
     
     for (NSDictionary *product in products)
     {
         ProductItem *productItem    = [[ProductItem alloc] init];
+        productItem.identfier       = product[P_ID];
         productItem.title           = product[P_TITLE];
         productItem.imageURL        = product[P_IMAGE_URL];
         productItem.availableQty    = [product[P_STOCK] integerValue];
         productItem.price           = [product[P_PRICE] floatValue];
+        productItem.desc            = product[P_DESC];
         
-        [productsList addObject:productItem];
+        [productsList setObject:productItem forKey:productItem.identfier];
         
     }
     

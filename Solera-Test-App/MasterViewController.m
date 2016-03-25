@@ -12,14 +12,17 @@
 #import "ShoppingCart.h"
 #import "CurrencyTableViewController.h"
 #import "Constants.h"
+#import "ShoppingCartViewController.h"
 
 
 @interface MasterViewController ()
 
-@property (nonatomic, strong) NSArray *productsList;
+@property (nonatomic, strong) NSDictionary *productsList;
+@property (nonatomic, strong) NSArray *productIdArray;
 @property (nonatomic, strong) ShoppingCart *cart;
 @property (nonatomic, strong) UIActivityIndicatorView *dbLoadIndicator;
 @property (nonatomic, strong) NSDictionary *currencyDict;
+@property (nonatomic, strong) NSString *currencyString;
 
 //Currency Button
 @property (weak, nonatomic) IBOutlet UIButton *currencyButton;
@@ -29,13 +32,9 @@
 
 @implementation MasterViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-//    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-//    self.navigationItem.rightBarButtonItem = addButton;
     
     //Get the handle of the DetailsViewController
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
@@ -75,6 +74,8 @@
     
     DataFetcher *fetcher = [[DataFetcher alloc] init];
     self.productsList = fetcher.getProductList;
+    self.productIdArray = [self.productsList allKeys];
+    
     [fetcher fetchCurrencyRates];
     
 }
@@ -87,9 +88,16 @@
 
 #pragma mark - Action Methods
 
-- (void)addProductToCart:(ProductItem *)product
+- (void)updateCartQuantity:(NSInteger)qty forProductId:(NSString *)productId
 {
-    [self.cart addProduct:product];
+    [self.cart updateQuantity:qty forProductId:productId];
+}
+
+- (ShoppingCart *)cart
+{
+    if (!_cart) _cart = [[ShoppingCart alloc] init];
+    
+    return _cart;
 }
 
 //Overriding setter for self.selectedCurrency
@@ -97,24 +105,21 @@
 {
     _selectedCurrency = selectedCurrency;
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:selectedCurrency forKey:K_USR_SELECTED_CURRENCY];
-    [defaults synchronize];
+    self.currencyString = ([selectedCurrency isEqualToString:@"USDUSD"]) ? @"USD" : [selectedCurrency stringByReplacingOccurrencesOfString:@"USD" withString:@""];
     
-    NSString *currencyString = ([selectedCurrency isEqualToString:@"USDUSD"]) ? @"USD" : [selectedCurrency stringByReplacingOccurrencesOfString:@"USD" withString:@""];
-    
-    [self.currencyButton setTitle:currencyString forState:UIControlStateNormal];
+    [self.currencyButton setTitle:self.currencyString forState:UIControlStateNormal];
 }
 
 - (void)reloadTableView
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.currencyDict = [defaults objectForKey:K_USR_CURRENCY_RATES];
-    self.selectedCurrency = [NSString stringWithString:[defaults stringForKey:K_USR_SELECTED_CURRENCY]];
+    self.selectedCurrency = [defaults stringForKey:K_USR_SELECTED_CURRENCY];
     
-    NDLog(@"Selected Currency : %@", self.selectedCurrency);
+    self.detailViewController.productItem = nil;
     
     [self.tableView reloadData];
+    
     [self stopActivityIndicator];
 }
 
@@ -122,9 +127,20 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showCurrencySelector"]) {
+    if ([[segue identifier] isEqualToString:@"showCart"]) {
         
-//        UINavigationController *cNVC = segue.destinationViewController;
+        ShoppingCartViewController *sVC = segue.destinationViewController;
+        sVC.cart = self.cart;
+        sVC.productsList = self.productsList;
+        sVC.currencyRate = [self.currencyDict[self.selectedCurrency] floatValue];
+        sVC.currencyString = self.currencyString;
+        
+        UIPopoverPresentationController *pPC = sVC.popoverPresentationController;
+        pPC.sourceRect = [(UIView *)sender bounds];
+        pPC.delegate = self;
+    }
+    
+    if ([[segue identifier] isEqualToString:@"showCurrencySelector"]) {
         
         CurrencyTableViewController *cTBVC = segue.destinationViewController;
         cTBVC.masterVC = self;
@@ -138,12 +154,16 @@
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
-        ProductItem *product = self.productsList[indexPath.row];
+        ProductItem *product = self.productsList[self.productIdArray[indexPath.row]];
+        
+        NSInteger qtyInCart = [self.cart getQuantityForProductId:product.identfier];
         
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
+        self.detailViewController = controller;
+        
+        controller.qtyInCart = qtyInCart;
         controller.masterViewController = self;
         [controller setProductItem:product];
-        
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
     }
@@ -158,23 +178,21 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.productsList.count;
+    return self.productIdArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    ProductItem *product = (ProductItem *)self.productsList[indexPath.row];
+    ProductItem *product = (ProductItem *)self.productsList[self.productIdArray[indexPath.row]];
     
     cell.textLabel.text = product.title;
     
     float currencyRate = [self.currencyDict[self.selectedCurrency] floatValue];
     float productPrice = product.price *currencyRate;
     
-    NSString *currencyString = ([self.selectedCurrency isEqualToString:@"USDUSD"]) ? @"USD" : [self.selectedCurrency stringByReplacingOccurrencesOfString:@"USD" withString:@""];
-    
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.02f %@", productPrice, currencyString];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.02f %@", productPrice, self.currencyString];
     
     return cell;
 }

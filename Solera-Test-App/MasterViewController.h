@@ -20,8 +20,7 @@ UIAlertViewDelegate
 @property (strong, nonatomic) DetailViewController *detailViewController;
 @property (nonatomic, strong) NSString *selectedCurrency;
 
-- (void)addProductToCart:(ProductItem *)product;
-//-(void)changeSelectedCurrency:(NSString *)currenyId;
+- (void)updateCartQuantity:(NSInteger)qty forProductId:(NSString *)productId;
 
 @end
 

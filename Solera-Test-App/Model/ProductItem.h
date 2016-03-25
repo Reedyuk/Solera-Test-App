@@ -11,6 +11,7 @@
 
 @interface ProductItem : NSObject
 
+@property (nonatomic, strong) NSString *identfier;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic) NSInteger availableQty;

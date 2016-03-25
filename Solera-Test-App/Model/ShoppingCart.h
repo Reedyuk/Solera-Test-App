@@ -11,6 +11,8 @@
 
 @interface ShoppingCart : NSObject
 
-- (void)addProduct: (ProductItem *)product;
+- (void)updateQuantity:(NSInteger)qty forProductId: (NSString *)productId;
+- (NSInteger)getQuantityForProductId:(NSString *)productId;
+- (NSArray *)getProductIds;
 
 @end

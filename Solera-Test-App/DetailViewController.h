@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "ProductItem.h"
 #import "MasterViewController.h"
+#import "ShoppingCart.h"
 
 @interface DetailViewController : UITableViewController
 
 @property (nonatomic, strong) ProductItem *productItem;
 @property (nonatomic, strong) MasterViewController *masterViewController;
+@property (nonatomic) NSInteger qtyInCart; //Quantity cannot be Negative
 
 @end
 

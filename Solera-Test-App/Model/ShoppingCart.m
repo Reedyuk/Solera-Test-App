@@ -10,27 +10,34 @@
 
 @interface ShoppingCart()
 
-@property (nonatomic, strong) NSMutableArray *products;
+@property (nonatomic, strong) NSMutableDictionary *products;
 
 @end
 
 @implementation ShoppingCart
 
 
-- (NSMutableArray *)products
+- (NSMutableDictionary *)products
 {
-    if (!_products) _products = [[NSMutableArray alloc] init];
+    //Lazy instantiation
+    if (!_products) _products = [[NSMutableDictionary alloc] init];
+    
     return _products;
 }
 
-- (void)addProduct: (ProductItem *)product
+- (void)updateQuantity:(NSInteger)qty forProductId: (NSString *)productId
 {
-    [self.products addObject:product];
+    [self.products setObject:@(qty) forKey:productId];
 }
 
-- (ProductItem *)getProductAtIndex:(NSInteger)index
+- (NSInteger)getQuantityForProductId:(NSString *)productId
 {
-    return self.products[index];
+    return [self.products[productId] integerValue];
+}
+
+- (NSArray *)getProductIds
+{
+    return [self.products allKeys];
 }
 
 @end

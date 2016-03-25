@@ -11,6 +11,6 @@
 @interface DataFetcher : NSObject
 
 - (void)fetchCurrencyRates;
-- (NSArray *)getProductList;
+- (NSDictionary *)getProductList;
 
 @end
