@@ -28,4 +28,4 @@ Implementation
 Libraries Used
 =========
 1. AFNetworking - for Async Http requests
-2. SDWebImage   - for loading Asynchronously in the TableView 
+2. SDWebImage   - for loading Images Asynchronously in the TableView 
