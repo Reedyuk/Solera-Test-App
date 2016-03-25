@@ -7,16 +7,32 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "ShoppingCart.h"
+#import "ProductItem.h"
+#import "DataFetcher.h"
 
 @interface Solera_Test_AppTests : XCTestCase
+
+@property (nonatomic) ShoppingCart *cart;
+@property (nonatomic) ProductItem *product;
+@property (nonatomic) NSDictionary *productsList;
 
 @end
 
 @implementation Solera_Test_AppTests
 
-- (void)setUp {
+- (void)setUp
+{
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    self.cart = [[ShoppingCart alloc] init];
+    [self.cart updateQuantity:2 forProductId:@"1"];
+    [self.cart updateQuantity:3 forProductId:@"1"];
+    [self.cart updateQuantity:2 forProductId:@"2"];
+    [self.cart updateQuantity:5 forProductId:@"3"];
+    
+    DataFetcher *fetcher = [[DataFetcher alloc] init];
+    self.productsList = [fetcher getProductList];
 }
 
 - (void)tearDown {
@@ -24,10 +40,43 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testDataFetcher
+{
+    ProductItem *product = self.productsList[@"1"];
+    NSString *productTitle = product.title;
+    NSString *expectedTitle = @"Peas";
+    
+    XCTAssertEqualObjects(expectedTitle, productTitle, @"Product Title did not match expected title");
 }
+
+- (void)testShoppingCart
+{
+    NSInteger productsInCart = [[self.cart getProductIds] count];
+    NSInteger expectedProductsInCart = 3;
+    
+    XCTAssertEqual(expectedProductsInCart, productsInCart, @"Products in cart did not match with expected products in cart");
+    
+}
+
+- (void)testGetItemQuantityFromShoppingCart
+{
+    NSInteger quantity = [self.cart getQuantityForProductId:@"3"];
+    NSInteger expectedQuantity = 5;
+    
+    XCTAssertEqual(expectedQuantity, quantity, @"Quantity did not match expected quantity");
+    
+}
+
+- (void)testGetItemQuantityFromShoppingCart2
+{
+    NSInteger quantity = [self.cart getQuantityForProductId:@"1"];
+    NSInteger expectedQuantity = 3;
+    
+    XCTAssertEqual(expectedQuantity, quantity, @"Quantity did not match expected quantity");
+    
+}
+
+
 
 - (void)testPerformanceExample {
     // This is an example of a performance test case.

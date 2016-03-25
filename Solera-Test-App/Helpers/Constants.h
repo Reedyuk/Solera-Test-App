@@ -30,6 +30,7 @@ extern NSString *const K_URL_CURRENCY;
 extern NSString *const K_USR_CURRENCY_RATES;
 extern NSString *const K_USR_SELECTED_CURRENCY;
 
+//Notifications
 extern NSString *const K_NOTIF_DATA_FETCH_COMPLETE;
 extern NSString *const K_NOTIF_NETWORK_ERROR;
 extern NSString *const K_NOTIF_SYNC_ERROR;

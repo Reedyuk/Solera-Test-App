@@ -26,9 +26,11 @@
 
 @implementation DetailViewController
 
-#pragma mark - Managing the detail item
+#pragma mark - Setters
 
-- (void)setProductItem:(id)newProductItem {
+- (void)setProductItem:(id)newProductItem
+{
+    //Lazy Instantiation
     if (_productItem != newProductItem) {
         _productItem = newProductItem;
         
@@ -40,11 +42,15 @@
 
 - (void)setQtyInCart:(NSInteger)newQtyInCart
 {
+    //Quantity in Cart cannot be negative
+    //So MAX will give us 0 if quantity is negative
     _qtyInCart = MAX(0, newQtyInCart);
     
+    //Update the Text Label immediately
     self.qtyCountLbl.text = [@(self.qtyInCart) stringValue];
 }
 
+//Update the View on Cell Selection on the MasterViewController
 - (void)updateView
 {
     if (self.productItem) {
@@ -76,6 +82,7 @@
         
     } else {
         
+        //If productItem is nil, Hide the details and disable the buttons
         self.productIV.hidden = YES;
         self.productTitleLbl.hidden = YES;
         self.priceLbl.hidden = YES;

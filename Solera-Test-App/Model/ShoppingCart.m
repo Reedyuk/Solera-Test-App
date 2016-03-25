@@ -17,6 +17,7 @@
 @implementation ShoppingCart
 
 
+//Override Getter
 - (NSMutableDictionary *)products
 {
     //Lazy instantiation
@@ -25,16 +26,26 @@
     return _products;
 }
 
+
+//Update the Product Quantity in the Cart
 - (void)updateQuantity:(NSInteger)qty forProductId: (NSString *)productId
 {
+    if (qty <= 0) {
+        
+        [self.products removeObjectForKey:productId];
+    } else{
+        
     [self.products setObject:@(qty) forKey:productId];
+    }
 }
 
+//Get the Quantity of Product from the Cart
 - (NSInteger)getQuantityForProductId:(NSString *)productId
 {
     return [self.products[productId] integerValue];
 }
 
+//Get the Array of Product Ids from the Cart
 - (NSArray *)getProductIds
 {
     return [self.products allKeys];
