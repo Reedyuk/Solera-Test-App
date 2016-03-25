@@ -1,6 +1,7 @@
 Solera-Test-App
 =========
-The app was implemented as per the requirements stated in the Document.
+1. The app was implemented as per the requirements stated in the Document.
+2. CocoaPods was used for managing library dependencies. So the project's "Solera-Test-App.xcworkspace" must be used for opening the app in XCode
 
 Requirements :
 =========
