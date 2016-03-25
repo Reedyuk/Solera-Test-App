@@ -23,3 +23,8 @@ Implementation
 3. On the Product details screen, the user can select the quantity of the items and then tap on the "Add to Cart" button to add the product to the cart.
 4. As per my understanding, for a Shopping Cart app such as this, Currency is supposed to be constant all through the app. Hence currency selection was implemented on the Main Screen. Tapping on the button pops up the complete list of Currency Locale codes. Selecting any locale enforces it all through the app, Products List, Product Details Screen as well as on the Shopping Cart.
 5. JSONRates.com has been integrated with CurrencyLayer, hence the API provided by CurrencyLayer was used in the app.
+
+Libraries Used
+=========
+1. AFNetworking - for Async Http requests
+2. SDWebImage   - for loading Asynchronously in the TableView 
