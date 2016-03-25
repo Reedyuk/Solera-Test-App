@@ -7,8 +7,12 @@
 //
 
 #import "CurrencyTableViewController.h"
+#import "Constants.h"
 
 @interface CurrencyTableViewController ()
+
+@property (nonatomic, strong) NSArray *currencyArray;
+
 
 @end
 
@@ -17,11 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.currencyArray = [[[NSUserDefaults standardUserDefaults] objectForKey:K_USR_CURRENCY_RATES] allKeys];;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,25 +31,39 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSInteger rowCount = [self.currencyArray count];
+    return rowCount;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CurrencyCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    NSString *currencyId = self.currencyArray[indexPath.row];
+    
+    currencyId = ([currencyId isEqualToString:@"USDUSD"]) ? @"USD" : [currencyId stringByReplacingOccurrencesOfString:@"USD" withString:@""];
+    
+//    currencyId =  [currencyId stringByReplacingOccurrencesOfString:@"USD" withString:@""];
+    
+    cell.textLabel.text = currencyId;
     
     return cell;
 }
-*/
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *selectedCurrency = self.currencyArray[indexPath.row];
+    
+    self.masterVC.selectedCurrency = selectedCurrency;
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -85,7 +99,7 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -93,6 +107,6 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+
 
 @end

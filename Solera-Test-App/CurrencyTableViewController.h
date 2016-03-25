@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MasterViewController.h"
 
 @interface CurrencyTableViewController : UITableViewController
+
+@property (nonatomic, strong) MasterViewController *masterVC;
 
 @end

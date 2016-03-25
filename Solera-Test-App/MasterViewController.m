@@ -19,6 +19,10 @@
 @property (nonatomic, strong) NSArray *productsList;
 @property (nonatomic, strong) ShoppingCart *cart;
 @property (nonatomic, strong) UIActivityIndicatorView *dbLoadIndicator;
+@property (nonatomic, strong) NSDictionary *currencyDict;
+
+//Currency Button
+@property (weak, nonatomic) IBOutlet UIButton *currencyButton;
 
 
 @end
@@ -81,25 +85,36 @@
 }
 
 
-
-//- (void)insertNewObject:(id)sender {
-//    if (!self.objects) {
-//        self.objects = [[NSMutableArray alloc] init];
-//    }
-//    [self.objects insertObject:[NSDate date] atIndex:0];
-//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//}
+#pragma mark - Action Methods
 
 - (void)addProductToCart:(ProductItem *)product
 {
     [self.cart addProduct:product];
 }
 
+//Overriding setter for self.selectedCurrency
+-(void)setSelectedCurrency:(NSString *)selectedCurrency
+{
+    _selectedCurrency = selectedCurrency;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:selectedCurrency forKey:K_USR_SELECTED_CURRENCY];
+    [defaults synchronize];
+    
+    NSString *currencyString = ([selectedCurrency isEqualToString:@"USDUSD"]) ? @"USD" : [selectedCurrency stringByReplacingOccurrencesOfString:@"USD" withString:@""];
+    
+    [self.currencyButton setTitle:currencyString forState:UIControlStateNormal];
+}
+
 - (void)reloadTableView
 {
-    [self.tableView reloadData];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.currencyDict = [defaults objectForKey:K_USR_CURRENCY_RATES];
+    self.selectedCurrency = [NSString stringWithString:[defaults stringForKey:K_USR_SELECTED_CURRENCY]];
     
+    NDLog(@"Selected Currency : %@", self.selectedCurrency);
+    
+    [self.tableView reloadData];
     [self stopActivityIndicator];
 }
 
@@ -109,11 +124,12 @@
 {
     if ([[segue identifier] isEqualToString:@"showCurrencySelector"]) {
         
-        UINavigationController *cNVC = segue.destinationViewController;
+//        UINavigationController *cNVC = segue.destinationViewController;
         
-//        CurrencyTableViewController *cTBVC = cNVC.viewControllers.firstObject;
+        CurrencyTableViewController *cTBVC = segue.destinationViewController;
+        cTBVC.masterVC = self;
         
-        UIPopoverPresentationController *pPC = cNVC.popoverPresentationController;
+        UIPopoverPresentationController *pPC = cTBVC.popoverPresentationController;
         pPC.sourceRect = [(UIView *)sender bounds];
         pPC.delegate = self;
     }
@@ -133,6 +149,7 @@
     }
 }
 
+
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -151,7 +168,13 @@
     ProductItem *product = (ProductItem *)self.productsList[indexPath.row];
     
     cell.textLabel.text = product.title;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"$ %@", product.price];
+    
+    float currencyRate = [self.currencyDict[self.selectedCurrency] floatValue];
+    float productPrice = product.price *currencyRate;
+    
+    NSString *currencyString = ([self.selectedCurrency isEqualToString:@"USDUSD"]) ? @"USD" : [self.selectedCurrency stringByReplacingOccurrencesOfString:@"USD" withString:@""];
+    
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.02f %@", productPrice, currencyString];
     
     return cell;
 }
@@ -162,10 +185,19 @@
 }
 
 
+#pragma mark - Popover Delegates
+
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller
 {
     return UIModalPresentationNone;
 }
+
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController
+{
+    [self reloadTableView];
+}
+
+
 
 #pragma mark - Activity Indicator Methods
 - (void)startActivityIndicator

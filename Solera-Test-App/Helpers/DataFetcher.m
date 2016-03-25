@@ -44,6 +44,7 @@ NSString *const P_PRICE     = @"price";
 //                 NDLog(@"JSON : %@", responseObject);
                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                  [defaults setObject:responseObject[@"quotes"] forKey:K_USR_CURRENCY_RATES];
+                 [defaults setObject:@"USDUSD" forKey:K_USR_SELECTED_CURRENCY];
                  [defaults synchronize];
                  
                  [self dataFetchComplete];
@@ -106,7 +107,7 @@ NSString *const P_PRICE     = @"price";
         productItem.title           = product[P_TITLE];
         productItem.imageURL        = product[P_IMAGE_URL];
         productItem.availableQty    = [product[P_STOCK] integerValue];
-        productItem.price           = product[P_PRICE];
+        productItem.price           = [product[P_PRICE] floatValue];
         
         [productsList addObject:productItem];
         

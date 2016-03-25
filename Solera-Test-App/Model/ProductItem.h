@@ -14,8 +14,8 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic) NSInteger availableQty;
-@property (nonatomic) NSNumber *price;
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic) float price;
+@property (nonatomic, strong) NSString *desc;
 
 
 @end
