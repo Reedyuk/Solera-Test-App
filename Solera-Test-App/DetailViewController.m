@@ -70,12 +70,14 @@
         NSDictionary *currencyDict = [[NSUserDefaults standardUserDefaults] objectForKey:K_USR_CURRENCY_RATES];
         NSString *selectedCurrency = [[NSUserDefaults standardUserDefaults] objectForKey:K_USR_SELECTED_CURRENCY];
         
+        NSURL *imageURL = [NSURL URLWithString:self.productItem.imageURL];
+        [self.productIV sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"green-leaf"]];
+        
         float currencyRate = [currencyDict[selectedCurrency] floatValue];
         float priceValue = self.productItem.price *currencyRate;
         NSString *currencyString = ([selectedCurrency isEqualToString:@"USDUSD"]) ? @"USD" : [selectedCurrency stringByReplacingOccurrencesOfString:@"USD" withString:@""];
         
         self.priceLbl.text = [NSString stringWithFormat:@"%.02f %@", priceValue, currencyString];
-        [self.productIV sd_setImageWithURL:[NSURL URLWithString:@""]];
         self.productTitleLbl.text = self.productItem.title;
         self.productDescLbl.text = self.productItem.desc;
         self.qtyCountLbl.text = [@(self.qtyInCart) stringValue]; // Get from Cart

@@ -84,7 +84,7 @@ NSString *const P_DESC      = @"desc";
                                @{
                                    @"id"    : @"1",
                                    @"title" : @"Peas",
-                                   @"image" : @"",
+                                   @"image" : @"https://dl.dropboxusercontent.com/s/ucjq4wtbh5hoasz/peas.jpg",
                                    @"stock" : @7,
                                    @"price" : @0.95,
                                    @"desc"  : @"Fresh frozen Green Peas"
@@ -92,7 +92,7 @@ NSString *const P_DESC      = @"desc";
                                @{
                                    @"id"    : @"2",
                                    @"title" : @"Eggs",
-                                   @"image" : @"",
+                                   @"image" : @"https://dl.dropboxusercontent.com/s/jh6z3052nxbt3zy/eggs.jpg",
                                    @"stock" : @8,
                                    @"price" : @2.10,
                                    @"desc"  : @"Fresh Eggs from farm fed Chicken"
@@ -100,7 +100,7 @@ NSString *const P_DESC      = @"desc";
                                @{
                                    @"id"    : @"3",
                                    @"title" : @"Milk",
-                                   @"image" : @"",
+                                   @"image" : @"https://dl.dropboxusercontent.com/s/upuzbrx9twf9h2a/milk.jpg",
                                    @"stock" : @5,
                                    @"price" : @1.30,
                                    @"desc"  : @"Fresh Milk from Grass Fed Cows"
@@ -108,13 +108,17 @@ NSString *const P_DESC      = @"desc";
                                @{
                                    @"id"    : @"4",
                                    @"title" : @"Beans",
-                                   @"image" : @"",
+                                   @"image" : @"https://dl.dropboxusercontent.com/s/r9qum7zwv1ccq40/beans.jpg",
                                    @"stock" : @8,
                                    @"price" : @0.73,
                                    @"desc"  : @"100% Organic White Beans"
                                 }
                                ];
     
+//    Beans - https://dl.dropboxusercontent.com/s/r9qum7zwv1ccq40/beans.jpg?raw=1
+//    Eggs - https://dl.dropboxusercontent.com/s/jh6z3052nxbt3zy/eggs.jpg?raw=1
+//    Milk - https://dl.dropboxusercontent.com/s/upuzbrx9twf9h2a/milk.jpg?raw=1
+//    Peas - https://dl.dropboxusercontent.com/s/ucjq4wtbh5hoasz/peas.jpg?raw=1
     
     return productsArray;
 }

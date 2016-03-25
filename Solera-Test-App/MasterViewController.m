@@ -13,6 +13,7 @@
 #import "CurrencyTableViewController.h"
 #import "Constants.h"
 #import "ShoppingCartViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 
 @interface MasterViewController ()
@@ -207,8 +208,10 @@
     
     float currencyRate = [self.currencyDict[self.selectedCurrency] floatValue];
     float productPrice = product.price *currencyRate;
-    
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%.02f %@", productPrice, self.currencyString];
+    
+    NSURL *imageURL = [NSURL URLWithString:product.imageURL];
+    [cell.imageView sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"green-leaf"]];
     
     return cell;
 }
