@@ -143,23 +143,25 @@
 {
     if ([[segue identifier] isEqualToString:@"showCart"]) {
         
-        ShoppingCartViewController *sVC = segue.destinationViewController;
+        UINavigationController *nVC = segue.destinationViewController;
+        ShoppingCartViewController *sVC = nVC.viewControllers.firstObject;
         sVC.cart = self.cart;
         sVC.productsList = self.productsList;
         sVC.currencyRate = [self.currencyDict[self.selectedCurrency] floatValue];
         sVC.currencyString = self.currencyString;
         
-        UIPopoverPresentationController *pPC = sVC.popoverPresentationController;
+        UIPopoverPresentationController *pPC = nVC.popoverPresentationController;
         pPC.sourceRect = [(UIView *)sender bounds];
         pPC.delegate = self;
     }
     
     if ([[segue identifier] isEqualToString:@"showCurrencySelector"]) {
         
-        CurrencyTableViewController *cTBVC = segue.destinationViewController;
+        UINavigationController *nVC = segue.destinationViewController;
+        CurrencyTableViewController *cTBVC = nVC.viewControllers.firstObject;
         cTBVC.masterVC = self;
         
-        UIPopoverPresentationController *pPC = cTBVC.popoverPresentationController;
+        UIPopoverPresentationController *pPC = nVC.popoverPresentationController;
         pPC.sourceRect = [(UIView *)sender bounds];
         pPC.delegate = self;
     }
@@ -211,7 +213,10 @@
     return cell;
 }
 
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 55;
+}
 
 #pragma mark - Popover Delegates
 
