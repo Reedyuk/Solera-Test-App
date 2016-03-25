@@ -50,6 +50,13 @@
     
     //Curency Conversion Identifier is in format USDXXX
     //So we will remove the preceeding USD
+    
+    //Tried to get Currency Symbols from NSLocale, but not all the symbols are available.
+    //So using the Currency Code directly
+//    NSString *curCode = ([selectedCurrency isEqualToString:@"USDUSD"]) ? @"USD" : [selectedCurrency stringByReplacingOccurrencesOfString:@"USD" withString:@""];
+//    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:curCode];
+//    self.currencyString = [NSString stringWithFormat:@"%@", [locale displayNameForKey:NSLocaleCurrencySymbol value:curCode]];
+    
     self.currencyString = ([selectedCurrency isEqualToString:@"USDUSD"]) ? @"USD" : [selectedCurrency stringByReplacingOccurrencesOfString:@"USD" withString:@""];
     
     [self.currencyButton setTitle:self.currencyString forState:UIControlStateNormal];
