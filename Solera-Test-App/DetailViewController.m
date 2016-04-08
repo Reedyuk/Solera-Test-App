@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *decrementBtn;
 @property (weak, nonatomic) IBOutlet UIButton *addToCartBtn;
 
+@property (nonatomic) NSInteger localQtyInCart;
+
 
 @end
 
@@ -40,14 +42,16 @@
     [self updateView];
 }
 
-- (void)setQtyInCart:(NSInteger)newQtyInCart
+- (void)setLocalQtyInCart:(NSInteger)newQtyInCart
 {
     //Quantity in Cart cannot be negative
     //So MAX will give us 0 if quantity is negative
-    _qtyInCart = MAX(0, newQtyInCart);
+    _localQtyInCart = MAX(0, newQtyInCart);
     
     //Update the Text Label immediately
-    self.qtyCountLbl.text = [@(self.qtyInCart) stringValue];
+    self.qtyCountLbl.text = [@(self.localQtyInCart) stringValue];
+    
+    [self updateAddToCartBtn];
 }
 
 //Update the View on Cell Selection on the MasterViewController
@@ -80,7 +84,16 @@
         self.priceLbl.text = [NSString stringWithFormat:@"%.02f %@", priceValue, currencyString];
         self.productTitleLbl.text = self.productItem.title;
         self.productDescLbl.text = self.productItem.desc;
-        self.qtyCountLbl.text = [@(self.qtyInCart) stringValue]; // Get from Cart
+        self.qtyCountLbl.text = [@(self.qtyInCart) stringValue];
+        
+        //If Cart already contains this Product
+        //change the button title to "Update Cart"
+        if (self.qtyInCart > 0) {
+            [self.addToCartBtn setTitle:@"Update Cart" forState:UIControlStateNormal];
+        }
+        
+        //Set the local Qty to Qty in Cart
+        self.localQtyInCart = self.qtyInCart;
         
     } else {
         
@@ -139,21 +152,58 @@
 
 - (IBAction)incrementProductQtyInCart:(UIButton *)sender
 {
-    self.qtyInCart++;
+    self.localQtyInCart++;
     
 }
 
 - (IBAction)decrementProductQtyInCart:(UIButton *)sender
 {
-    self.qtyInCart--;
+    self.localQtyInCart--;
     
 }
 
 
 - (IBAction)addProductToCart:(UIButton *)sender
 {
+    self.qtyInCart = self.localQtyInCart;
     [self.masterViewController updateCartQuantity:self.qtyInCart forProductId:self.productItem.identfier];
     
+    NSString *btnText = self.addToCartBtn.currentTitle;
+    NSString *textToUpdate = btnText;
+    
+    if ([btnText isEqualToString:T_BTN_REMOVE_FROM_CART]) {
+        textToUpdate = @"Successfully Removed";
+    }
+    if ([btnText isEqualToString:T_BTN_ADD_TO_CART] && (self.qtyInCart > 0)) {
+        textToUpdate = @"Successfully Added";
+    }
+    if ([btnText isEqualToString:T_BTN_UPDATE_CART] && (self.qtyInCart > 0)) {
+        textToUpdate = @"Successfully Updated";
+    }
+    
+    [self.addToCartBtn setTitle:textToUpdate forState:UIControlStateNormal];
+}
+
+//Update Add To Cart button
+- (void)updateAddToCartBtn
+{
+    NSString *btnText = self.addToCartBtn.currentTitle;
+    NSString *textToUpdate = btnText;
+    
+    if (self.qtyInCart <= 0) {
+        textToUpdate = T_BTN_ADD_TO_CART;
+    }
+    else if (self.qtyInCart > 0 && self.localQtyInCart <= 0) {
+        textToUpdate = T_BTN_REMOVE_FROM_CART;
+    }
+    else if (self.qtyInCart > 0) {
+        textToUpdate = T_BTN_UPDATE_CART;
+    }
+    else if (self.qtyInCart > 0 && self.qtyInCart != self.localQtyInCart) {
+        textToUpdate = T_BTN_UPDATE_CART;
+    }
+    
+    [self.addToCartBtn setTitle:textToUpdate forState:UIControlStateNormal];
 }
 
 

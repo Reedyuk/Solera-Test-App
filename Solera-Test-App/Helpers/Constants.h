@@ -41,4 +41,9 @@ extern NSString *const K_ALERT_NETWORK_ERROR_TITLE;
 extern NSString *const K_ALERT_SYNC_EROR_TEXT;
 extern NSString *const K_ALERT_SYNC_ERROR_TITLE;
 
+//Product Details Activity
+extern NSString *const T_BTN_ADD_TO_CART;
+extern NSString *const T_BTN_UPDATE_CART;
+extern NSString *const T_BTN_REMOVE_FROM_CART;
+
 @end

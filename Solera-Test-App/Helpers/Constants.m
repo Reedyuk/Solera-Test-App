@@ -31,4 +31,9 @@ NSString *const K_ALERT_NETWORK_ERROR_TITLE = @"Network Error";
 NSString *const K_ALERT_SYNC_EROR_TEXT = @"Some error occured while syncing the data!\nPlease try again later";
 NSString *const K_ALERT_SYNC_ERROR_TITLE = @"Sync Error";
 
+//Product Details Activity
+NSString *const T_BTN_ADD_TO_CART = @"Add to Cart";
+NSString *const T_BTN_UPDATE_CART = @"Update Cart";
+NSString *const T_BTN_REMOVE_FROM_CART = @"Remove From Cart";
+
 @end

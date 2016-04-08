@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) ProductItem *productItem;
 @property (nonatomic, strong) MasterViewController *masterViewController;
-@property (nonatomic) NSInteger qtyInCart; //Quantity cannot be Negative
+@property (nonatomic) NSInteger qtyInCart;
 
 @end
 
